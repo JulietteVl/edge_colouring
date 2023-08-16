@@ -1,4 +1,4 @@
-# edge_colouring
+# Edge Colouring
 
 Here is an example of how to use git to make changes - we don't need to follow that closely, the main point is to pull the master before making a new branch and make a branch before making changes.
 - Open an issue explaining the features/ changes/ fixes.
