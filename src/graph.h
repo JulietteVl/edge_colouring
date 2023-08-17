@@ -1,58 +1,76 @@
-/*
-Properties to test:
-- at most d out neighbours
-- at most ceil(log N) partitions
-*/
+#ifndef GRAPH_H
+#define GRAPH_H
 
-#include <iostream>
-#include <numeric> // iota
 #include <bits/stdc++.h>
+#include <numeric> // iota
 
 using namespace std;
 
-void insert(int u, int v);
-void make_partition(vector<int> *hpartition, vector<int> *adj, int d);
-
-const int N = 5;
-vector<int> adj[N];
-
-int main()
+template <int N>
+class Graph
 {
-    insert(0, 1);
-    insert(1, 2);
-    insert(2, 3);
-    insert(2, 4);
-
+private:
+    vector<int> adj[N];
     vector<int> hpartition[N];
-    make_partition(hpartition, adj, 3);
-    return 0;
+
+public:
+    // constructor: build an empty graph
+    Graph();
+
+    // Copy constructor
+    Graph(const Graph &g);
+
+    // Destructor
+    ~Graph();
+
+    // Insertion
+    void insert(int u, int v);
+
+    // Make Partition
+    void make_partition(int d);
+
+    // Get Partition
+    vector<int> *get_partition();
+};
+
+// Declaration needed before compilation time as a template is used.
+
+template <int N>
+Graph<N>::Graph()
+{
 }
 
-void display(int *first, int *last)
+template <int N>
+Graph<N>::~Graph()
 {
-    while (first <= last)
+}
+
+template <int N>
+Graph<N>::Graph(const Graph &g)
+{
+    adj = new vector<int>[N];
+    for (int i = 0; i < N; i++)
     {
-        cout << *first++ << " ";
+        adj[i] = vector(g < -adj[i]);
     }
-    cout << endl;
-    return;
 }
 
-// For initialization
-void insert(int u, int v)
+/*
+For initialization
+Insert the edge uv into the adjacency list.
+In the dynamic setting, we might want it to update the data structure.
+*/
+template <int N>
+void Graph<N>::insert(int u, int v)
 {
-    /*
-    Insert the edge uv into the adjacency list.
-
-    In the dynamic setting, we might want it to update the data structure.
-    */
     adj[u].push_back(v);
     adj[v].push_back(u);
     return;
 }
 
 // To make the H-partition
-void make_partition(vector<int> *hpartition, vector<int> *adj, int d)
+template <int N>
+void Graph<N>::make_partition(int d)
 {
     // Get the active degrees. TODO test this.
     int active_degree[N];
@@ -91,3 +109,11 @@ void make_partition(vector<int> *hpartition, vector<int> *adj, int d)
     }
     return;
 }
+
+template <int N>
+vector<int> *Graph<N>::get_partition()
+{
+    return hpartition;
+}
+
+#endif
