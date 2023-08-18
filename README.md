@@ -9,3 +9,8 @@ Here is an example of how to use git to make changes - we don't need to follow t
 - Create a merge request from your branch.
 - Make any suggested changes based on the code review, then push those changes.
 - After the merge request is accepted, pull the new changes to master (git checkout master, then git pull origin master).
+
+---
+
+To run the tests manually:
+$ g++ -o test test_graph.cpp -lgtest -lgtest_main -pthread && ./test 
