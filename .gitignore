@@ -31,6 +31,9 @@
 *.out
 *.app
 
-#CMake
-CMakeList.txt
+# CMake
+CMakeLists.txt
 build/*
+
+# Other
+.vscode/*
