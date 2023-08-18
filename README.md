@@ -13,4 +13,4 @@ Here is an example of how to use git to make changes - we don't need to follow t
 ---
 
 To run the tests manually:
-$ g++ -o test test_graph.cpp -lgtest -lgtest_main -pthread && ./test 
+$ g++ -o test.out test_graph.cpp -lgtest -lgtest_main -pthread && ./test.out
