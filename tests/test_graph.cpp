@@ -3,7 +3,16 @@
 
 TEST(MyTestSuite, MyTestCase)
 {
-    ASSERT_EQ(2 + 2, 4);
+    Graph<5> G;
+    G.insert(0, 1);
+    G.insert(1, 2);
+    G.insert(2, 3);
+    G.insert(2, 4);
+
+    G.make_partition(1);
+
+    int s = G.get_partition()[0].size();
+    ASSERT_EQ(s, 4);
 }
 
 int main(int argc, char **argv)
