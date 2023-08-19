@@ -17,9 +17,10 @@ include_directories(src)
 
 enable_testing()
 
+include(GoogleTest)
+
 add_executable(app src/main.cpp)
 add_executable(tests tests/test_graph.cpp)
 target_link_libraries(tests gtest_main)
 
-include(GoogleTest)
 gtest_discover_tests(tests)
