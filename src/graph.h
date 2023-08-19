@@ -46,12 +46,15 @@ Graph<N>::~Graph()
 }
 
 template <int N>
-Graph<N>::Graph(const Graph &g)
+Graph<N>::Graph(const Graph<N> &g)
 {
     adj = new vector<int>[N];
     for (int i = 0; i < N; i++)
     {
-        adj[i] = vector(g < -adj[i]);
+        for (int j = 0; j < N; j++)
+        {
+            adj[i].pushback(g.adj[i][j]);
+        }
     }
 }
 
