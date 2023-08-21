@@ -12,6 +12,7 @@ class Graph
 private:
     vector<int> adj[N];
     vector<int> hpartition[N];
+    int level[N];
 
 public:
     Graph();
@@ -68,13 +69,13 @@ void Graph<N>::make_partition(int d)
     int active_degree[N];
     list<int> index(N);
     iota(index.begin(), index.end(), 0);
-    for (int i = 0; i < N; i++)
+    for (int v = 0; v < N; v++)
     {
-        active_degree[i] = adj[i].size();
+        active_degree[v] = adj[v].size();
     }
 
     //  Recursively create partitions:
-    int level = 0;
+    int i = 0;
     while (index.size() > 0)
     {
         auto it = index.begin();
@@ -88,7 +89,8 @@ void Graph<N>::make_partition(int d)
                 {
                     active_degree[neighbour]--;
                 }
-                hpartition[level].push_back(v);
+                hpartition[i].push_back(v);
+                level[v] = i;
                 inserted.push_back(it);
             }
             it++;
@@ -97,7 +99,7 @@ void Graph<N>::make_partition(int d)
         {
             index.erase(it);
         }
-        level++;
+        i++;
     }
     return;
 }
