@@ -14,22 +14,11 @@ private:
     vector<int> hpartition[N];
 
 public:
-    // constructor: build an empty graph
     Graph();
-
-    // Copy constructor
     Graph(const Graph &g);
-
-    // Destructor
     ~Graph();
-
-    // Insertion
     void insert(int u, int v);
-
-    // Make Partition
     void make_partition(int d);
-
-    // Get Partition
     vector<int> *get_partition();
 };
 
