@@ -23,7 +23,7 @@ public:
     vector<int> *get_partition();
 };
 
-// Declaration needed before compilation time as a template is used.
+// Definition needed before compilation time as a template is used.
 
 template <int N>
 Graph<N>::Graph()

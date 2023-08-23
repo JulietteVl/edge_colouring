@@ -9,10 +9,10 @@ Properties to test:
 
 using namespace std;
 
-const int N = 5;
-
 int main()
 {
+    // graph quick test
+
     Graph<5> G;
     G.insert(0, 1);
     G.insert(1, 2);
