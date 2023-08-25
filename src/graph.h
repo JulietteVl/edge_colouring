@@ -2,7 +2,8 @@
 #define GRAPH_H
 
 #include <bits/stdc++.h>
-#include <numeric> // iota
+#include <numeric>   // iota
+#include "palette.h" // and Edge
 
 using namespace std;
 
@@ -10,9 +11,12 @@ template <int N>
 class Graph
 {
 private:
+    list<Edge> edge;
     vector<int> adj[N];
     vector<int> hpartition[N];
+    Palette<N> palette;
     int level[N];
+    int lv_max;
 
 public:
     Graph();
@@ -21,6 +25,7 @@ public:
     void insert(int u, int v);
     void make_partition(int d);
     vector<int> *get_partition();
+    void colour();
 };
 
 // Definition needed before compilation time as a template is used.
@@ -51,11 +56,16 @@ Graph<N>::Graph(const Graph<N> &g)
 /*
 For initialization
 Insert the edge uv into the adjacency list.
-In the dynamic setting, we might want it to update the data structure.
+In the dynamic setting, we will want it to update the data structure.
 */
 template <int N>
 void Graph<N>::insert(int u, int v)
 {
+    Edge e;
+    e.u = u;
+    e.v = v;
+    e.colour = -1;
+    edge.push_back(e);
     adj[u].push_back(v);
     adj[v].push_back(u);
     return;
@@ -99,6 +109,7 @@ void Graph<N>::make_partition(int d)
         {
             index.erase(it);
         }
+        lv_max = i;
         i++;
     }
     return;
@@ -108,6 +119,33 @@ template <int N>
 vector<int> *Graph<N>::get_partition()
 {
     return hpartition;
+}
+
+template <int N>
+void Graph<N>::colour()
+{
+    vector<Edge> *edge_by_level = new vector<Edge>[lv_max];
+    int lv;
+    for (Edge e : edge)
+    {
+        if (level[e.u] < level[e.v])
+        {
+            lv = level[e.u];
+        }
+        else
+        {
+            lv = level[e.v];
+        }
+        edge_by_level[lv].push_back(e);
+    }
+    for (int i = lv_max; i--; i >= 0)
+    {
+        for (Edge e : edge_by_level[i])
+        {
+            e.colour = find_colour(palette[e.u], palette[e.v], e);
+        }
+    }
+    delete[] edge_by_level;
 }
 
 #endif

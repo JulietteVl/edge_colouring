@@ -20,6 +20,7 @@ int main()
     G.insert(2, 4);
 
     G.make_partition(1);
+    G.colour();
 
     vector<int> *hpartition;
     hpartition = G.get_partition();
