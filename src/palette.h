@@ -29,6 +29,7 @@ public:
     ~Palette();
     void add(int c, Edge e);
     void remove(int c);
+    int sum(int a, int b);
 };
 
 template <int D>
@@ -59,17 +60,23 @@ void Palette<D>::remove(int c)
 }
 
 template <int D>
+int Palette<D>::sum(int a, int b)
+{
+    return T.sum(a, b);
+}
+
+template <int D>
 int find_colour(Palette<D> P1, Palette<D> P2, Edge e)
 {
     int l = 0, r = 2 * D - 1;
     while (l < r)
     {
         int z = (l + r + 1) / 2;
-        if (P1.T.sum(l, z) + P2.T.sum(l, z))
+        if (P1.sum(l, z) + P2.sum(l, z))
         {
             r = z;
         }
-        if (P1.T.sum(z, r) + P2.T.sum(z, r))
+        if (P1.sum(z, r) + P2.sum(z, r))
         {
             l = z;
         }
