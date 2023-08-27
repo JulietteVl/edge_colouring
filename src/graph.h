@@ -14,7 +14,7 @@ private:
     list<Edge> edge;
     vector<int> adj[N];
     vector<int> hpartition[N];
-    Palette<N> palette;
+    Palette<N> palette[N];
     int level[N];
     int lv_max;
 
