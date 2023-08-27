@@ -24,8 +24,10 @@ public:
     ~Graph();
     void insert(int u, int v);
     void make_partition(int d);
-    vector<int> *get_partition();
     void colour();
+    vector<int> *get_partition();
+    list<Edge> get_edges();
+    void print_edges();
 };
 
 // Definition needed before compilation time as a template is used.
@@ -116,16 +118,11 @@ void Graph<N>::make_partition(int d)
 }
 
 template <int N>
-vector<int> *Graph<N>::get_partition()
-{
-    return hpartition;
-}
-
-template <int N>
 void Graph<N>::colour()
 {
-    vector<Edge> *edge_by_level = new vector<Edge>[lv_max];
+    vector<Edge *> *edge_by_level = new vector<Edge *>[lv_max];
     int lv;
+    auto it = edge.begin();
     for (Edge e : edge)
     {
         if (level[e.u] < level[e.v])
@@ -136,16 +133,40 @@ void Graph<N>::colour()
         {
             lv = level[e.v];
         }
-        edge_by_level[lv].push_back(e);
+        edge_by_level[lv].push_back(&(*it));
+        it++;
     }
     for (int i = lv_max; i--; i >= 0)
     {
-        for (Edge e : edge_by_level[i])
+        for (auto address : edge_by_level[i])
         {
-            e.colour = find_colour(palette[e.u], palette[e.v], e);
+            Edge &e = *address;
+            int c = find_colour(palette[e.u], palette[e.v], e);
+            e.colour = c;
+            palette[e.u].add(c, &e);
+            palette[e.v].add(c, &e);
         }
     }
     delete[] edge_by_level;
+}
+
+template <int N>
+vector<int> *Graph<N>::get_partition()
+{
+    return hpartition;
+}
+template <int N>
+list<Edge> Graph<N>::get_edges()
+{
+    return edge;
+}
+template <int N>
+void Graph<N>::print_edges()
+{
+    for (Edge e : edge)
+    {
+        cout << e.u << " -- " << e.v << " colour " << e.colour << endl;
+    }
 }
 
 #endif

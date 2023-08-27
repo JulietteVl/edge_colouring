@@ -21,13 +21,6 @@ int main()
 
     G.make_partition(1);
     G.colour();
-
-    vector<int> *hpartition;
-    hpartition = G.get_partition();
-    for (auto v : hpartition[0])
-    {
-        cout << v << " ";
-    }
-    cout << endl;
+    G.print_edges();
     return 0;
 }
