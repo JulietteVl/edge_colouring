@@ -9,24 +9,20 @@ Properties to test:
 
 using namespace std;
 
-const int N = 5;
-
 int main()
 {
-    Graph<5> G;
+    // graph quick test
+
+    int d = 2;
+    const int N = 5;
+    Graph<N> G;
     G.insert(0, 1);
     G.insert(1, 2);
     G.insert(2, 3);
     G.insert(2, 4);
 
-    G.make_partition(1);
-
-    vector<int> *hpartition;
-    hpartition = G.get_partition();
-    for (auto v : hpartition[0])
-    {
-        cout << v << " ";
-    }
-    cout << endl;
+    G.make_partition(d);
+    G.colour();
+    G.print_edges();
     return 0;
 }
