@@ -5,7 +5,7 @@
 
 using namespace std;
 
-TEST(MyTestSuite, MyTestCase)
+TEST(SumQueries, FromFile)
 {
     ifstream input;
     input.open("in_out/range_sum/input_2.txt");

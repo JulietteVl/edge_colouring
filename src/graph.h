@@ -12,7 +12,7 @@ class Graph
 {
 private:
     list<Edge> edge;
-    vector<int> adj[N];
+    vector<pair<int, Edge *>> adj[N];
     vector<int> hpartition[N];
     Palette<N> palette[N];
     int level[N];
@@ -20,12 +20,12 @@ private:
 
 public:
     Graph();
-    Graph(const Graph &g);
     ~Graph();
     void insert(int u, int v);
     void make_partition(int d);
     void colour();
     vector<int> *get_partition();
+    vector<pair<int, Edge *>> *get_adjency_list();
     list<Edge> get_edges();
     void print_edges();
 };
@@ -42,19 +42,6 @@ Graph<N>::~Graph()
 {
 }
 
-template <int N>
-Graph<N>::Graph(const Graph<N> &g)
-{
-    adj = new vector<int>[N];
-    for (int i = 0; i < N; i++)
-    {
-        for (int j = 0; j < N; j++)
-        {
-            adj[i].pushback(g.adj[i][j]);
-        }
-    }
-}
-
 /*
 For initialization
 Insert the edge uv into the adjacency list.
@@ -68,8 +55,8 @@ void Graph<N>::insert(int u, int v)
     e.v = v;
     e.colour = -1;
     edge.push_back(e);
-    adj[u].push_back(v);
-    adj[v].push_back(u);
+    adj[u].push_back(make_pair(v, &edge.back()));
+    adj[v].push_back(make_pair(u, &edge.back()));
     return;
 }
 
@@ -99,7 +86,7 @@ void Graph<N>::make_partition(int d)
             {
                 for (auto neighbour : adj[v])
                 {
-                    active_degree[neighbour]--;
+                    active_degree[neighbour.first]--;
                 }
                 hpartition[i].push_back(v);
                 level[v] = i;
@@ -111,8 +98,7 @@ void Graph<N>::make_partition(int d)
         {
             index.erase(it);
         }
-        lv_max = i;
-        i++;
+        lv_max = ++i;
     }
     return;
 }
@@ -155,6 +141,13 @@ vector<int> *Graph<N>::get_partition()
 {
     return hpartition;
 }
+
+template <int N>
+vector<pair<int, Edge *>> *Graph<N>::get_adjency_list()
+{
+    return adj;
+}
+
 template <int N>
 list<Edge> Graph<N>::get_edges()
 {

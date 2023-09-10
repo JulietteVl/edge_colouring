@@ -13,13 +13,15 @@ int main()
 {
     // graph quick test
 
-    Graph<5> G;
+    int d = 2;
+    const int N = 5;
+    Graph<N> G;
     G.insert(0, 1);
     G.insert(1, 2);
     G.insert(2, 3);
     G.insert(2, 4);
 
-    G.make_partition(1);
+    G.make_partition(d);
     G.colour();
     G.print_edges();
     return 0;
