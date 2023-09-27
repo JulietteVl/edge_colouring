@@ -28,10 +28,10 @@ include(GoogleTest)
 add_executable(app src/main.cpp)
 
 add_executable(tests_graph tests/test_graph.cpp)
-add_executable(tests_tree tests/test_tree.cpp)
+add_executable(tests_segment_tree tests/test_segment_tree.cpp)
 
 target_link_libraries(tests_graph gtest gtest_main pthread)
-target_link_libraries(tests_tree gtest gtest_main pthread)
+target_link_libraries(tests_segment_tree gtest gtest_main pthread)
 
 gtest_discover_tests(tests_graph)
-gtest_discover_tests(tests_tree)
+gtest_discover_tests(tests_segment_tree)

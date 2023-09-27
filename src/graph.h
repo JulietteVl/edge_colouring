@@ -21,6 +21,27 @@ private:
 public:
     Graph();
     ~Graph();
+    virtual void insert(int u, int v) = 0;
+    virtual vector<int> *get_partition() = 0;
+    virtual vector<pair<int, Edge *>> *get_adjency_list() = 0;
+    virtual list<Edge> get_edges() = 0;
+    virtual void print_edges() = 0;
+};
+
+template <int N>
+class StaticGraph
+{
+private:
+    list<Edge> edge;
+    vector<pair<int, Edge *>> adj[N];
+    vector<int> hpartition[N];
+    Palette<N> palette[N];
+    int level[N];
+    int lv_max;
+
+public:
+    StaticGraph();
+    ~StaticGraph();
     void insert(int u, int v);
     void make_partition(int d);
     void colour();
@@ -33,12 +54,12 @@ public:
 // Definition needed before compilation time as a template is used.
 
 template <int N>
-Graph<N>::Graph()
+StaticGraph<N>::StaticGraph()
 {
 }
 
 template <int N>
-Graph<N>::~Graph()
+StaticGraph<N>::~StaticGraph()
 {
 }
 
@@ -48,7 +69,7 @@ Insert the edge uv into the adjacency list.
 In the dynamic setting, we will want it to update the data structure.
 */
 template <int N>
-void Graph<N>::insert(int u, int v)
+void StaticGraph<N>::insert(int u, int v)
 {
     Edge e;
     e.u = u;
@@ -62,7 +83,7 @@ void Graph<N>::insert(int u, int v)
 
 // To make the H-partition
 template <int N>
-void Graph<N>::make_partition(int d)
+void StaticGraph<N>::make_partition(int d)
 {
     // Get the active degrees. TODO test this.
     int active_degree[N];
@@ -104,7 +125,7 @@ void Graph<N>::make_partition(int d)
 }
 
 template <int N>
-void Graph<N>::colour()
+void StaticGraph<N>::colour()
 {
     vector<Edge *> *edge_by_level = new vector<Edge *>[lv_max];
     int lv;
@@ -137,24 +158,24 @@ void Graph<N>::colour()
 }
 
 template <int N>
-vector<int> *Graph<N>::get_partition()
+vector<int> *StaticGraph<N>::get_partition()
 {
     return hpartition;
 }
 
 template <int N>
-vector<pair<int, Edge *>> *Graph<N>::get_adjency_list()
+vector<pair<int, Edge *>> *StaticGraph<N>::get_adjency_list()
 {
     return adj;
 }
 
 template <int N>
-list<Edge> Graph<N>::get_edges()
+list<Edge> StaticGraph<N>::get_edges()
 {
     return edge;
 }
 template <int N>
-void Graph<N>::print_edges()
+void StaticGraph<N>::print_edges()
 {
     for (Edge e : edge)
     {

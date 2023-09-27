@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <gtest/gtest.h>
-#include "../src/tree.h"
+#include "../src/segment_tree.h"
 
 using namespace std;
 
@@ -21,7 +21,7 @@ TEST(SumQueries, FromFile)
     input >> q;
 
     const int n = 200000;
-    Tree<n> T;
+    SegmentTree<n> T;
 
     for (int k = 1; k <= n; k++)
     {

@@ -1,7 +1,7 @@
 #ifndef PALETTE_H
 #define PALETTE_H
 
-#include "tree.h"
+#include "segment_tree.h"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ class Palette
 private:
     Edge *edge[2 * D - 1];   // pointer to the edge where the colour is represented
     bool present[2 * D - 1]; // The colour is represented at v
-    Tree<2 * D - 1> T;
+    SegmentTree<2 * D - 1> T;
 
 public:
     Palette();
