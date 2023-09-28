@@ -5,7 +5,7 @@ Properties to test:
 */
 
 #include <iostream>
-#include "graph.h"
+#include "graph_static.h"
 
 using namespace std;
 
@@ -15,7 +15,7 @@ int main()
 
     int d = 2;
     const int N = 5;
-    Graph<N> G;
+    StaticGraph<N> G;
     G.insert(0, 1);
     G.insert(1, 2);
     G.insert(2, 3);
