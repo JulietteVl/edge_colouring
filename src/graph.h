@@ -10,7 +10,7 @@ using namespace std;
 template <int N>
 class Graph
 {
-private:
+protected:
     list<Edge> edge;
     vector<pair<int, Edge *>> adj[N];
     vector<int> hpartition[N];
