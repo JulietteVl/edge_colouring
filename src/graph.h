@@ -23,11 +23,20 @@ public:
     virtual void insert(int u, int v) = 0;
     virtual vector<int> *get_partition();
     virtual vector<pair<int, Edge *>> *get_adjency_list();
-    virtual list<Edge> get_edges();
-    virtual void print_edges();
 };
 
 // Definition needed before compilation time as a template is used.
+
+
+template <int N>
+Graph<N>::Graph()
+{
+}
+
+template <int N>
+Graph<N>::~Graph()
+{
+}
 
 template <int N>
 vector<int> *Graph<N>::get_partition()
@@ -39,12 +48,6 @@ template <int N>
 vector<pair<int, Edge *>> *Graph<N>::get_adjency_list()
 {
     return adj;
-}
-
-template <int N>
-list<Edge> Graph<N>::get_edges()
-{
-    return edge;
 }
 
 

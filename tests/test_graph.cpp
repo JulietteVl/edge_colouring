@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
-#include "../src/graph.h"
+#include "../src/graph_static.h"
 
 TEST(PartitionTest, SmallExample)
 {
-    Graph<5> G;
+    StaticGraph<5> G;
     G.insert(0, 1);
     G.insert(1, 2);
     G.insert(2, 3);
@@ -19,7 +19,7 @@ TEST(DifferentColours, SmallExample)
 {
     int d = 2;
     const int N = 5;
-    Graph<N> G;
+    StaticGraph<N> G;
     G.insert(0, 1);
     G.insert(1, 2);
     G.insert(2, 3);

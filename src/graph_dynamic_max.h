@@ -6,7 +6,7 @@
 template <int N>
 class DynamicGraph : public Graph<N>
 {
-    private:
+private:
     map<pair, Edge> edge;
 public:
     DynamicGraph();

@@ -1,12 +1,12 @@
 #ifndef STATIC_GRAPH_H
 #define STATIC_GRAPH_H
 
-#include"graph.h"
+#include "graph.h"
 
 template <int N>
 class StaticGraph : public Graph<N>
 {
-    private:
+private:
     list<Edge> edge;
 public:
     StaticGraph();
@@ -14,6 +14,8 @@ public:
     void insert(int u, int v);
     void make_partition(int d);
     void colour();
+    list<Edge> get_edges();
+    void print_edges();
 };
 
 // Definition needed before compilation time as a template is used.
@@ -41,8 +43,8 @@ void StaticGraph<N>::insert(int u, int v)
     e.v = v;
     e.colour = -1;
     edge.push_back(e);
-    adj[u].push_back(make_pair(v, &edge.back()));
-    adj[v].push_back(make_pair(u, &edge.back()));
+    this->adj[u].push_back(make_pair(v, &edge.back()));
+    this->adj[v].push_back(make_pair(u, &edge.back()));
     return;
 }
 
@@ -56,7 +58,7 @@ void StaticGraph<N>::make_partition(int d)
     iota(index.begin(), index.end(), 0);
     for (int v = 0; v < N; v++)
     {
-        active_degree[v] = adj[v].size();
+        active_degree[v] = this->adj[v].size();
     }
 
     //  Recursively create partitions:
@@ -70,12 +72,12 @@ void StaticGraph<N>::make_partition(int d)
             // Pick degree less than d, reduce active degree of neighbour, put in partition i.
             if (active_degree[v] <= d)
             {
-                for (auto neighbour : adj[v])
+                for (auto neighbour : this->adj[v])
                 {
                     active_degree[neighbour.first]--;
                 }
-                hpartition[i].push_back(v);
-                level[v] = i;
+                this->hpartition[i].push_back(v);
+                this->level[v] = i;
                 inserted.push_back(it);
             }
             it++;
@@ -84,7 +86,7 @@ void StaticGraph<N>::make_partition(int d)
         {
             index.erase(it);
         }
-        lv_max = ++i;
+        this->lv_max = ++i;
     }
     return;
 }
@@ -92,38 +94,44 @@ void StaticGraph<N>::make_partition(int d)
 template <int N>
 void StaticGraph<N>::colour()
 {
-    vector<Edge *> *edge_by_level = new vector<Edge *>[lv_max];
+    vector<Edge *> *edge_by_level = new vector<Edge *>[this->lv_max];
     int lv;
     auto it = edge.begin();
     for (Edge e : edge)
     {
-        if (level[e.u] < level[e.v])
+        if (this->level[e.u] < this->level[e.v])
         {
-            lv = level[e.u];
+            lv = this->level[e.u];
         }
         else
         {
-            lv = level[e.v];
+            lv = this->level[e.v];
         }
         edge_by_level[lv].push_back(&(*it));
         it++;
     }
-    for (int i = lv_max; i--; i >= 0)
+    for (int i = this->lv_max; i--; i >= 0)
     {
         for (auto address : edge_by_level[i])
         {
             Edge &e = *address;
-            int c = find_colour(palette[e.u], palette[e.v], e);
+            int c = find_colour(this->palette[e.u], this->palette[e.v], e);
             e.colour = c;
-            palette[e.u].add(c, &e);
-            palette[e.v].add(c, &e);
+            this->palette[e.u].add(c, &e);
+            this->palette[e.v].add(c, &e);
         }
     }
     delete[] edge_by_level;
 }
 
 template <int N>
-void Graph<N>::print_edges()
+list<Edge> StaticGraph<N>::get_edges()
+{
+    return edge;
+}
+
+template <int N>
+void StaticGraph<N>::print_edges()
 {
     for (Edge e : edge)
     {
